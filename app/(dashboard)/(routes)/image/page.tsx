@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { amountOptions, formSchema, resolutionOptions } from './constanst';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 import Heading from '@/components/heading';
 import Empty from '@/components/empty';
@@ -28,6 +29,8 @@ import {
 
 const ImageGenerationPage = () => {
   const router = useRouter();
+  const proModal = useProModal();
+
   const [images, setImages] = useState<string[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,7 +54,9 @@ const ImageGenerationPage = () => {
       setImages(urls);
       form.reset();
     } catch (error: any) {
-      console.log(error);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
     } finally {
       router.refresh();
     }
