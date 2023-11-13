@@ -1,7 +1,15 @@
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { auth } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
 const LandingPage = () => {
+  const { userId } = auth();
+
+  if (userId) {
+    return redirect('/dashboard');
+  }
+
   return (
     <div>
       <div>
