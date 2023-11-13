@@ -3,6 +3,7 @@
 import * as z from 'zod';
 import axios from 'axios';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 import { Download, ImageIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -56,6 +57,8 @@ const ImageGenerationPage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen();
+      } else {
+        toast.error('Something went wrong.');
       }
     } finally {
       router.refresh();

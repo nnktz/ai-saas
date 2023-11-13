@@ -1,6 +1,8 @@
 'use client';
 
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
 import {
   Check,
   Code,
@@ -25,7 +27,6 @@ import { Badge } from './ui/badge';
 import { Card } from './ui/card';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-import { useState } from 'react';
 
 const tools = [
   {
@@ -72,7 +73,7 @@ const ProModal = () => {
       const res = await axios.get('/api/stripe');
       window.location.href = res.data.url;
     } catch (error) {
-      console.log(error, 'Stripe_CLIENT_ERROR');
+      toast.error('Something went wrong.');
     } finally {
       setLoading(false);
     }
